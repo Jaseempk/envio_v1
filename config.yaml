@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: kuri_v1
+networks:
+  - id: 84532
+    start_block: 0
+    contracts:
+      - name: KuriCoreFactory
+        address:
+          - 0x866af7b1A1eDdAadE318cDe882ED0f2004dC6d7F
+        handler: src/EventHandlers.ts
+        events:
+          - event: KuriMarketDeployed(address indexed caller, address indexed marketAddress, uint8 intervalType, uint256 timestamp)
+          - event: RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)
+          - event: RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
+          - event: RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
+
+      - name: KuriCore
+
+        abi_file_path: abis/KuriCore.json
+        handler: src/EventHandlers.ts
+        events:
+          - event: CoordinatorSet(address vrfCoordinator)
+          - event: KuriInitFailed(address creator, uint64 kuriAmount, uint16 totalParticipantsCount, uint8 state)
+          - event: KuriInitialised((address,uint64,uint16,uint16,uint24,uint48,uint48,uint48,uint48,uint48,uint8,uint8) _kuriData)
+          - event: KuriSlotClaimed(address user, uint64 timestamp, uint64 kuriAmount, uint16 intervalIndex)
+          - event: MembershipRequested(address user, uint256 timestamp)
+          - event: OwnershipTransferRequested(address indexed from, address indexed to)
+          - event: OwnershipTransferred(address indexed from, address indexed to)
+          - event: RaffleWinnerSelected(uint16 intervalIndex, uint16 winnerIndex, address winnerAddress, uint48 winnerTimestamp, uint256 requestId)
+          - event: RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)
+          - event: RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
+          - event: RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
+          - event: UserAccepted(address user, address caller, uint16 _totalActiveParticipantsCount)
+          - event: UserDeposited(address user, uint256 userIndex, uint256 intervalIndex, uint64 amountDeposited, uint48 depositTimestamp)
+          - event: UserFlagged(address user, uint16 intervalIndex)
+          - event: UserRejected(address user, address caller)
+          - event: VRFIntegrationDone(address caller, uint256 subscriptionId, uint256 consumerCount, address contractAddress, uint256 timestamp)
+
+unordered_multichain_mode: true
